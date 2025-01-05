@@ -2,7 +2,6 @@ import curses
 import time
 from random import choice
 
-# Game settings
 ALIEN_ROWS = 3
 ALIEN_COLS = 8
 ALIEN_MOVE_DELAY = 0.5
@@ -23,7 +22,6 @@ def main(screen):
     screen.nodelay(True)
     screen.timeout(50)
 
-    # Initialize game variables
     h, w = screen.getmaxyx()
     player_x = w // 2
     player_y = h - 2
@@ -32,27 +30,21 @@ def main(screen):
     alien_direction = 1
     last_alien_move = time.time()
 
-    # Main game loop
     while True:
         screen.clear()
         draw_border(screen)
 
-        # Draw player
         screen.addch(player_y, player_x, "A")
 
-        # Draw aliens
         for row in aliens:
             for x, y in row:
                 screen.addch(y, x, "X")
 
-        # Draw bullets
         for bx, by in bullets:
             screen.addch(by, bx, "|")
 
-        # Move bullets
         bullets = [(x, y - 1) for x, y in bullets if y > 1]
 
-        # Handle collisions
         new_aliens = []
         for row in aliens:
             new_row = []
@@ -63,14 +55,12 @@ def main(screen):
                 new_aliens.append(new_row)
         aliens = new_aliens
 
-        # Check win condition
         if not aliens:
             screen.addstr(h // 2, w // 2 - 5, "YOU WIN!")
             screen.refresh()
             time.sleep(2)
             break
 
-        # Move aliens
         if time.time() - last_alien_move > ALIEN_MOVE_DELAY:
             last_alien_move = time.time()
             max_x = max(max(x for x, y in row) for row in aliens)
@@ -84,14 +74,12 @@ def main(screen):
             else:
                 aliens = [[(x + alien_direction, y) for x, y in row] for row in aliens]
 
-        # Check loss condition
         if any(y >= player_y for row in aliens for x, y in row):
             screen.addstr(h // 2, w // 2 - 5, "GAME OVER!")
             screen.refresh()
             time.sleep(2)
             break
 
-        # Handle input
         key = screen.getch()
         if key == curses.KEY_LEFT and player_x > 1:
             player_x -= 1
@@ -100,7 +88,6 @@ def main(screen):
         elif key == ord(" ") and len(bullets) < 3:
             bullets.append((player_x, player_y - 1))
 
-        # Refresh screen
         screen.refresh()
         time.sleep(0.05)
 
