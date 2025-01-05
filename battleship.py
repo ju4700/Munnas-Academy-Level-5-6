@@ -30,19 +30,13 @@ def place_ship(board, size):
 def main():
     print(Fore.CYAN + "Welcome to Advanced Battleship!" + Style.RESET_ALL)
 
-    # Create a 10x10 board
     size = 10
     board = [["~"] * size for _ in range(size)]
     display_board = [["~"] * size for _ in range(size)]
 
-    # Place ships (sizes 5, 4, 3, 2)
     ship_sizes = [5, 4, 3, 3, 2]
     for ship_size in ship_sizes:
         place_ship(board, ship_size)
-
-    # Uncomment for debugging
-    # for row in board:
-    #     print(" ".join(row))
 
     turns = 20
     ships_left = len(ship_sizes)
@@ -71,7 +65,7 @@ def main():
             print(Fore.GREEN + "Hit! You hit a ship!" + Style.RESET_ALL)
             display_board[guess_row][guess_col] = Fore.RED + "X" + Style.RESET_ALL
             board[guess_row][guess_col] = "X"
-            # Check if the ship is sunk
+            
             sunk = True
             for r in range(size):
                 for c in range(size):
