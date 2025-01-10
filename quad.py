@@ -8,10 +8,8 @@ def quadratic(a, b, c):
     print(f'X1 = {f1:.3f}')
     print(f'X2 = {f2:.4f}')
 
-
 def multiplication(a, b, c):
     return a*b*c
-
 
 def summation(a, b, c):
     return a+b+c

@@ -8,7 +8,6 @@ ALIEN_MOVE_DELAY = 0.5
 BULLET_SPEED = 0.1
 
 def draw_border(screen):
-    """Draws the border of the game."""
     h, w = screen.getmaxyx()
     for x in range(w):
         screen.addch(0, x, "-")
